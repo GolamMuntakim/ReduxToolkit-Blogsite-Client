@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
 
 const NavBar = () => {
@@ -6,6 +7,7 @@ const NavBar = () => {
         <div>
              <header className="flex items-center justify-between py-4 border-b ">
                 <Link to="/" className="px-2 lg:px-0 uppercase font-bold text-purple-800">LOGO</Link>
+                <Search></Search>
       <ul className="md:inline-flex items-center hidden">
         <li className="px-2 md:px-4">
           <Link
@@ -15,6 +17,7 @@ const NavBar = () => {
             Home
           </Link>
         </li>
+
         <li className="px-2 md:px-4">
           <a
             href="#"

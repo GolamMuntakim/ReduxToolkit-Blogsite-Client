@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -9,10 +9,13 @@ import Card from "./Card";
 const PostCard = () => {
   const dispatch = useDispatch()
   const {blogs, isLoading, isError} = useSelector(state=> state.blogs);
+  const {tags , search} = useSelector((state)=> state.filter)
+  // console.log(tags, search)
+
    // dispatch action to get blogs 
    useEffect(()=>{
-    dispatch(fetchBlogs())
-  },[dispatch])
+    dispatch(fetchBlogs({tags, search}))
+  },[dispatch, search, tags])
   console.log(blogs)
   // pagination
   const [currentPage , setCurrentPage] = useState(1)
