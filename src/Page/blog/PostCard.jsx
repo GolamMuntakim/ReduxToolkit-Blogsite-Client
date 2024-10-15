@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
+
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchBlogs } from "@/redux/features/blogs/blogsSlice";
+import Card from "./Card";
 
 
 const PostCard = () => {
   const dispatch = useDispatch()
   const {blogs, isLoading, isError} = useSelector(state=> state.blogs);
+  // pagination
+  const [currentPage , setCurrentPage] = useState(1)
+  const blogsPerPage = 5
+  const paginatedBlogs = blogs.slice()
   // dispatch action to get blogs 
   useEffect(()=>{
     dispatch(fetchBlogs())
@@ -19,13 +20,15 @@ const PostCard = () => {
   console.log(blogs)
   return (
     <div className="w-full lg:w-2/3">
-      <div className="block rounded w-full lg:flex mb-10">
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel>One</ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel>Two</ResizablePanel>
-        </ResizablePanelGroup>
-      </div>
+     {
+      !isError && !isLoading && blogs?.length>0 ? (<div>
+        {
+          blogs.map((blog , index)=>{
+            return <Card blog={blog} key={index}></Card>
+          })
+        }
+      </div>) : <div>No data found</div>
+     }
 
     </div>
   );
